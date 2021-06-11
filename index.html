@@ -86,8 +86,12 @@
                         token,
                         expired
                     } = res.data;
+
                     console.log(expired, new Date(expired));
+
+                    //寫入
                     document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`;
+
                     console.log("document.cookie", document.cookie);
                 }
             });
@@ -117,10 +121,10 @@
             <td>${item.origin_price}</td>
             <td>${item.price}</td>
             <td><div class="custom-control custom-switch switch-js">
-            <input ${item.is_enabled ? "checked":" "}  type="checkbox" class="custom-control-input switchBtn-js" id="customSwitch${item.id}" data-action="status" data-id="${item.id}">
-            <label class="custom-control-label switchLabel-js" for="customSwitch${item.id}" data-action="status" data-id="${item.id}">
+            <input ${item.is_enabled ? "checked":" "}  type="checkbox" class="custom-control-input switchBtn-js" id="customSwitch${item.id}" data-id="${item.id}">
+            <label class="custom-control-label switchLabel-js" for="customSwitch${item.id}" data-id="${item.id}">
             ${item.is_enabled ? "已啟用":"未啟用"}
-            </label></div></td><td><button type="button" class="btn btn-light btn-sm deleteBtn-js"  data-id="${item.id}" data-action="delete">刪除</button>
+            </label></div></td><td><button type="button" class="btn btn-light btn-sm deleteBtn-js" data-id="${item.id}>刪除</button>
             </td></tr>`;
             })
             const list = document.querySelector("#list");
@@ -133,9 +137,8 @@
             })
 
         },
-        delete(evt) {
-            const id = evt.target.dataset.id;
-            console.log('deleteProduct', evt, id);
+        delete(e) {
+            const id = e.target.getAttribute("data-id");
 
             axios.delete(`${url}/api/${path}/admin/product/${id}`)
                 .then(res => {
@@ -144,13 +147,10 @@
                 })
         },
         init() {
-            // Cookie 取出來
             const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
             console.log("token", token);
 
             axios.defaults.headers.common['Authorization'] = token;
-
-            // 針對同一個站點
 
             this.getData();
         }
