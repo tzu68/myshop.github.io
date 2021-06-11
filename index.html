@@ -124,7 +124,7 @@
             <input ${item.is_enabled ? "checked":" "}  type="checkbox" class="custom-control-input switchBtn-js" id="customSwitch${item.id}" data-id="${item.id}">
             <label class="custom-control-label switchLabel-js" for="customSwitch${item.id}" data-id="${item.id}">
             ${item.is_enabled ? "已啟用":"未啟用"}
-            </label></div></td><td><button type="button" class="btn btn-light btn-sm deleteBtn-js" data-id="${item.id}>刪除</button>
+            </label></div></td><td><button type="button" class="btn btn-light btn-sm deleteBtn-js" data-id="${item.id}">刪除</button>
             </td></tr>`;
             })
             const list = document.querySelector("#list");
